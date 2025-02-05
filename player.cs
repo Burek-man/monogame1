@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.MediaFoundation;
 
 namespace spaceshhoter
 {
@@ -9,6 +11,15 @@ namespace spaceshhoter
         private Texture2D texture;
         private Vector2 position;
         private Rectangle hitbox;
+        private KeyboardState newKstate;
+        
+         private KeyboardState oldkState;
+
+        private List<bullet> bullets = new List<bullet>();
+
+        public List<bullet> Bullets{
+            get{return bullets;}
+        }
 
         public Player(Texture2D texture, Vector2 position, int pixelSize){
             this.texture = texture;
@@ -18,16 +29,31 @@ namespace spaceshhoter
 
         }
     public void Update(){
+        newKstate = Keyboard.GetState();
        Move();
+       Shoot();
+        oldkState = newKstate;
+
+       foreach(bullet b in bullets){
+        b.Update();
+       }
     }
 
-    private void Move(){
-         KeyboardState kState =Keyboard.GetState();
 
-        if(kState.IsKeyDown(Keys.A)){
+    private void Shoot(){
+        
+        if(newKstate.IsKeyDown(Keys.Space) && oldkState.IsKeyUp(Keys.Space)){
+            bullet bullet = new bullet(texture,position); 
+            bullets.Add(bullet);
+        }
+    }
+    private void Move(){
+    
+
+        if(newKstate.IsKeyDown(Keys.A)){
             position.X -= 1;
         }
-        else if(kState.IsKeyDown(Keys.D)){
+        else if(newKstate.IsKeyDown(Keys.D)){
             position.X +=1;
         }
         hitbox.Location = position.ToPoint();
@@ -37,8 +63,9 @@ namespace spaceshhoter
 
     public void Draw(SpriteBatch spriteBatch){
         spriteBatch.Draw(texture,hitbox,Color.White);
+        foreach(bullet b in bullets){
+            b.Draw(spriteBatch);
+        }
     }
     }
 }
-
-

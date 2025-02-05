@@ -1,16 +1,20 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using spaceshhoter;
+using Monogame._2;
 
-namespace monogame1;
+namespace spaceshhoter;
 
 public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Player player;
-    private Texture2D spaceship;
+    private Texture2D spaceShip;
+    private List<Enemy> enemies = new List<Enemy>();
+
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -28,10 +32,12 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        spaceship = Content.Load<Texture2D>("spaceship");
 
-        player = new player(spaceship,
-                new Vector2(380,350),50);
+        spaceShip = Content.Load<Texture2D>("spaceship");
+
+        player = new Player(spaceShip,new Vector2(380,350),50);
+
+        enemies.Add(new Enemy(spaceShip));
     }
 
     protected override void Update(GameTime gameTime)
@@ -39,7 +45,16 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
+        
+
         player.Update();
+        foreach(Enemy Enemy in enemies){
+            Enemy.Update();
+        }
+
+        enemybulletCollision();
+
+        SpawnEnemy();
         base.Update(gameTime);
     }
 
@@ -49,8 +64,34 @@ public class Game1 : Game
 
         _spriteBatch.Begin();
         player.Draw(_spriteBatch);
+        foreach(Enemy Enemy in enemies)
+        Enemy.Draw(_spriteBatch);
         _spriteBatch.End();
+
+
 
         base.Draw(gameTime);
     }
+    private void SpawnEnemy(){
+        Random rand = new Random();
+        int value = rand.Next(1,101);
+        int spawnChancePercent = 5;
+        if(value<=spawnChancePercent)
+        enemies.Add(new Enemy(spaceShip));
+    }
+
+private void enemybulletCollision(){
+for(int i = 0; i <enemies.Count; i++){
+    for(int j = 0; j <player.Bullets.Count; j++){
+        if(enemies[i].Hitbox.Intersects(player.Bullets[j].Hitbox)){
+            enemies.RemoveAt(i);
+            player.Bullets.RemoveAt(j);
+            i--;
+            j--;
+        }
+    }
+
+}
+}
+
 }

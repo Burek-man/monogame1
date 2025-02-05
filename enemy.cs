@@ -1,77 +1,39 @@
 using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using SharpDX;
 
-namespace spaceshhoter;
-
-public class Game1 : Game
+namespace Monogame._2
 {
-    private GraphicsDeviceManager _graphics;
-    private SpriteBatch _spriteBatch;
-    private Player player;
-    private Texture2D spaceShip;
-    private List<enemy> enemies = new List<enemy>();
-
-    public Game1()
+    public class Enemy
     {
-        _graphics = new GraphicsDeviceManager(this);
-        Content.RootDirectory = "Content";
-        IsMouseVisible = true;
-    }
+        private Texture2D texture;
+        private Microsoft.Xna.Framework.Vector2 position;
+        private Microsoft.Xna.Framework.Rectangle hitbox;
+        private float speed;
 
-    protected override void Initialize()
-    {
-        // TODO: Add your initialization logic here
-
-        base.Initialize();
-    }
-
-    protected override void LoadContent()
-    {
-        _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-        spaceShip = Content.Load<Texture2D>("spacespp");
-
-        player = new Player(spaceShip,new Vector2(380,350),50);
-
-        enemies.Add(new enemy(spaceShip));
-    }
-
-    protected override void Update(GameTime gameTime)
-    {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
-
-        
-        player.Update();
-        foreach(enemy enemy in enemies){
-            enemy.Update();
+        public Microsoft.Xna.Framework.Rectangle Hitbox{
+            get{return hitbox;}
         }
-        spawnenemies();
-        base.Update(gameTime);
-    }
 
-    protected override void Draw(GameTime gameTime)
-    {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        public Enemy(Texture2D texture){
+            this.texture = texture;
+            Random rand = new Random();
+            int size = rand.Next(10, 50);
+            speed = rand.NextFloat(5, 100);
+            position.X = rand.NextFloat(0, 750);
+            position.Y = -50;
+            hitbox = new ((int) position.X, (int) position.Y, size, size);
+        }
 
-        _spriteBatch.Begin();
-        player.Draw(_spriteBatch);
-        foreach(enemy enemy in enemies)
-        enemy.Draw(_spriteBatch);
-        _spriteBatch.End();
+        public void Update(){
+            position.Y += speed*1f/60f;
 
+            hitbox.Location = position.ToPoint();
+        }
 
-
-        base.Draw(gameTime);
-    }
-    private void spawnenemies(){
-        Random rand = new Random();
-        int value = rand.Next(1,101);
-        int spawnChancePercent = 5;
-        if(value<=spawnChancePercent)
-        enemies.Add(new enemy(spaceShip));
+        public void Draw(SpriteBatch spriteBatch){
+            spriteBatch.Draw(texture, hitbox, Microsoft.Xna.Framework.Color.Red);
+        }
     }
 }
