@@ -1,16 +1,19 @@
-﻿using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using spaceshhoter;
 
-namespace monogame1;
+namespace spaceshhoter;
 
 public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Player player;
-    private Texture2D spaceship;
+    private Texture2D spaceShip;
+    private List<enemy> enemies = new List<enemy>();
+
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -28,10 +31,12 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        spaceship = Content.Load<Texture2D>("spaceship");
 
-        player = new player(spaceship,
-                new Vector2(380,350),50);
+        spaceShip = Content.Load<Texture2D>("spacespp");
+
+        player = new Player(spaceShip,new Vector2(380,350),50);
+
+        enemies.Add(new enemy(spaceShip));
     }
 
     protected override void Update(GameTime gameTime)
@@ -39,7 +44,12 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
+        
         player.Update();
+        foreach(enemy enemy in enemies){
+            enemy.Update();
+        }
+        spawnenemies();
         base.Update(gameTime);
     }
 
@@ -49,8 +59,19 @@ public class Game1 : Game
 
         _spriteBatch.Begin();
         player.Draw(_spriteBatch);
+        foreach(enemy enemy in enemies)
+        enemy.Draw(_spriteBatch);
         _spriteBatch.End();
 
+
+
         base.Draw(gameTime);
+    }
+    private void spawnenemies(){
+        Random rand = new Random();
+        int value = rand.Next(1,101);
+        int spawnChancePercent = 5;
+        if(value<=spawnChancePercent)
+        enemies.Add(new enemy(spaceShip));
     }
 }
