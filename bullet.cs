@@ -29,7 +29,7 @@ namespace spaceshhoter
         }
 
         public void Draw(SpriteBatch spriteBatch){
-        spriteBatch.Draw(texture,hitbox,Color.Green);
+        spriteBatch.Draw(texture,hitbox,Color.SeaGreen);
  
     }
   }

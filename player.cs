@@ -42,7 +42,7 @@ namespace spaceshhoter
 
     private void Shoot(){
         
-        if(newKstate.IsKeyDown(Keys.Space) && oldkState.IsKeyUp(Keys.Space)){
+        if((newKstate.IsKeyDown(Keys.Space) && oldkState.IsKeyUp(Keys.Space)) || newKstate.IsKeyDown(Keys.W)){
             bullet bullet = new bullet(texture,position); 
             bullets.Add(bullet);
         }

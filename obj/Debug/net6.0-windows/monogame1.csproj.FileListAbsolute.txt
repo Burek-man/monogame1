@@ -37,3 +37,6 @@ C:\Users\Admin\Documents\GitHub\monogame1\obj\Debug\net6.0-windows\monogame1.pdb
 C:\Users\Admin\Documents\GitHub\monogame1\obj\Debug\net6.0-windows\monogame1.genruntimeconfig.cache
 C:\Users\Admin\Documents\GitHub\monogame1\obj\Debug\net6.0-windows\ref\monogame1.dll
 C:\Users\Admin\Documents\GitHub\monogame1\bin\Debug\net6.0-windows\Content\spaceship.xnb
+C:\Users\Admin\Documents\GitHub\monogame1\bin\Debug\net6.0-windows\Content\ufoEnemy.xnb
+C:\Users\Admin\Documents\GitHub\monogame1\bin\Debug\net6.0-windows\Content\ExK_qcgVIAIOLwR.xnb
+C:\Users\Admin\Documents\GitHub\monogame1\bin\Debug\net6.0-windows\Content\enemyspaceship.xnb

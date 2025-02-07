@@ -13,6 +13,10 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
     private Player player;
     private Texture2D spaceShip;
+
+    private Texture2D enemyspaceship;
+    private Texture2D backgrundbild;
+    private Texture2D Ufo;
     private List<Enemy> enemies = new List<Enemy>();
 
     public Game1()
@@ -35,9 +39,15 @@ public class Game1 : Game
 
         spaceShip = Content.Load<Texture2D>("spaceship");
 
+        enemyspaceship = Content.Load<Texture2D>("enemyspaceship");
+
+        Ufo = Content.Load<Texture2D>("ufoEnemy");
+
+        backgrundbild = Content.Load<Texture2D>("ExK_qcgVIAIOLwR");
+
         player = new Player(spaceShip,new Vector2(380,350),50);
 
-        enemies.Add(new Enemy(spaceShip));
+        enemies.Add(new Enemy(enemyspaceship));
     }
 
     protected override void Update(GameTime gameTime)
@@ -60,12 +70,15 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(Color.White);
 
         _spriteBatch.Begin();
+        Rectangle bgRect = new(0, 0, 800, 600);
+        _spriteBatch.Draw(backgrundbild, bgRect, Microsoft.Xna.Framework.Color.White);
         player.Draw(_spriteBatch);
         foreach(Enemy Enemy in enemies)
         Enemy.Draw(_spriteBatch);
+
         _spriteBatch.End();
 
 
@@ -76,8 +89,10 @@ public class Game1 : Game
         Random rand = new Random();
         int value = rand.Next(1,101);
         int spawnChancePercent = 5;
-        if(value<=spawnChancePercent)
-        enemies.Add(new Enemy(spaceShip));
+        if(value<=spawnChancePercent) {
+            enemies.Add(new Enemy(enemyspaceship));
+            enemies.Add(new Enemy(Ufo));
+        }
     }
 
 private void enemybulletCollision(){
