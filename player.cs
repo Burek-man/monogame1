@@ -14,11 +14,15 @@ namespace spaceshhoter
         private KeyboardState newKstate;
         
          private KeyboardState oldkState;
+         private float hp;
 
         private List<bullet> bullets = new List<bullet>();
 
         public List<bullet> Bullets{
             get{return bullets;}
+        }
+        public float Hp{
+            get{return hp;}
         }
 
         public Player(Texture2D texture, Vector2 position, int pixelSize){
