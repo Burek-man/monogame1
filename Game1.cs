@@ -88,7 +88,7 @@ public class Game1 : Game
     private void SpawnEnemy(){
         Random rand = new Random();
         int value = rand.Next(1,101);
-        int spawnChancePercent = 5;
+        int spawnChancePercent = 2;
         if(value<=spawnChancePercent) {
             enemies.Add(new Enemy(enemyspaceship));
             enemies.Add(new Enemy(Ufo));
