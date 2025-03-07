@@ -49,6 +49,12 @@
 /processorParam:TextureFormat=Color
 /build:spaceship.png
 
+#begin themesong1.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:themesong1.ogg
+
 #begin ufoEnemy.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -40,3 +40,5 @@ C:\Users\Admin\Documents\GitHub\monogame1\bin\Debug\net6.0-windows\Content\space
 C:\Users\Admin\Documents\GitHub\monogame1\bin\Debug\net6.0-windows\Content\ufoEnemy.xnb
 C:\Users\Admin\Documents\GitHub\monogame1\bin\Debug\net6.0-windows\Content\ExK_qcgVIAIOLwR.xnb
 C:\Users\Admin\Documents\GitHub\monogame1\bin\Debug\net6.0-windows\Content\enemyspaceship.xnb
+C:\Users\Admin\Documents\GitHub\monogame1\bin\Debug\net6.0-windows\Content\themesong1.wma
+C:\Users\Admin\Documents\GitHub\monogame1\bin\Debug\net6.0-windows\Content\themesong1.xnb

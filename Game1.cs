@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using Monogame._2;
 
 namespace spaceshhoter;
@@ -11,13 +12,14 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+
     private Player player;
     private Texture2D spaceShip;
-
     private Texture2D enemyspaceship;
     private Texture2D backgrundbild;
     private Texture2D Ufo;
     private List<Enemy> enemies = new List<Enemy>();
+    Song theme; 
 
     public Game1()
     {
@@ -37,6 +39,7 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+
         spaceShip = Content.Load<Texture2D>("spaceship");
 
         enemyspaceship = Content.Load<Texture2D>("enemyspaceship");
@@ -48,6 +51,10 @@ public class Game1 : Game
         player = new Player(spaceShip,new Vector2(380,350),50);
 
         enemies.Add(new Enemy(enemyspaceship));
+        
+        theme = Content.Load<Song>("themesong1");
+        MediaPlayer.Play(theme);
+
     }
 
     protected override void Update(GameTime gameTime)
@@ -66,7 +73,7 @@ public class Game1 : Game
 
         SpawnEnemy();
         base.Update(gameTime);
-    }
+    }  
 
     protected override void Draw(GameTime gameTime)
     {
@@ -101,8 +108,7 @@ for(int i = 0; i <enemies.Count; i++){
         if(enemies[i].Hitbox.Intersects(player.Bullets[j].Hitbox)){
             enemies.RemoveAt(i);
             player.Bullets.RemoveAt(j);
-            i--;
-            j--;
+            i--;  
         }
     }
 
